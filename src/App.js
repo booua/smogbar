@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import AirQuality from "./components/AirQuality/AirQuality";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+const styles = {
+  root: {
+    justifyContent: "center",
+  },
+};
+
+const client = new ApolloClient({
+  uri: "https://airly-widget-server.herokuapp.com/",
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <div style={styles.root}>
+        <h1>Airly widget</h1>
+        <AirQuality></AirQuality>
+      </div>
+    </ApolloProvider>
   );
 }
 
