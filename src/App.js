@@ -1,4 +1,4 @@
-import AirQuality from "./components/AirQuality/AirQuality";
+import AirQualityAdvice from "./components/AirQualityAdvice/AirQualityAdvice";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 const styles = {
@@ -16,8 +16,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div style={styles.root}>
-        <h1>Airly widget</h1>
-        <AirQuality></AirQuality>
+        <AirQualityAdvice></AirQualityAdvice>
       </div>
     </ApolloProvider>
   );

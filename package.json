@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.2.0",
     "dotenv": "^8.2.0",
     "electron-is-dev": "^1.2.0",
+    "electron-settings": "^4.0.2",
     "electron-squirrel-startup": "^1.0.0",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",

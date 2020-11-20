@@ -10,6 +10,9 @@ export const GET_MEASUREMENTS = gql`
         }
         indexes {
           advice
+          description
+          value
+          color
         }
       }
     }

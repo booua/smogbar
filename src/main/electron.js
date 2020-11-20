@@ -43,7 +43,7 @@ function createMenubar() {
     ? "http://localhost:3000"
     : `file://${path.join(__dirname, "../build/index.html")}`;
 
-  const icon = path.join(__dirname, "../src/images/mac/icon@2x.png");
+  const icon = path.join(__dirname, "../../src/images/mac/icon@2x.png");
 
   const mb = menubar({
     index: appIndex,

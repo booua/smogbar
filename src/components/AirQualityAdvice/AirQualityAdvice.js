@@ -10,7 +10,7 @@ const styles = {
   },
 };
 
-const AirQuality = () => {
+const AirQualityAdvice = () => {
   const [geolocation, setGeolocation] = useState(null);
 
   useEffect(() => {
@@ -30,4 +30,4 @@ const AirQuality = () => {
   );
 };
 
-export default AirQuality;
+export default AirQualityAdvice;

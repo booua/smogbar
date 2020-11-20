@@ -10,8 +10,8 @@ function LoadingIndicator() {
           WebkitAnimationDelay: "0s",
           animationDelay: "0s",
         }}
-        width="217"
-        height="217"
+        width="100%"
+        height="100%"
         display="block"
         preserveAspectRatio="xMidYMid"
         viewBox="0 0 100 100"
