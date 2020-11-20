@@ -8,7 +8,7 @@ const AirQualityBar = (props) => {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    width: "80%",
+    width: "85%",
     backgroundColor: "#e0e0de",
     borderRadius: "10px",
     marginBottom: "20px",
@@ -21,6 +21,8 @@ const AirQualityBar = (props) => {
     borderRadius: "inherit",
     textAlign: "right",
     transition: "width 0.4s ease-in-out",
+    minWidth: '65px',
+    maxWidth: '100%',
   };
 
   const caqiLabelStyles = {
@@ -41,7 +43,14 @@ const AirQualityBar = (props) => {
     color: "black",
     fontSize: "0.9rem",
     fontFamily: "Quicksand",
+    
   };
+
+  const fillerLabelStyles = {
+    color: "black",
+    fontSize: "0.5rem",
+    fontFamily: "Quicksand",
+  }
 
   const barLabelContainerStyles = {
     width: "100%",
@@ -65,7 +74,8 @@ const AirQualityBar = (props) => {
         <div style={fillerStyles}>
           <span style={caqiLabelStyles}>
             {`${caqiValue}`} 
-            <span style={labelStyles}> CAQI</span>
+            <span style={labelStyles}> </span>
+            <span style={fillerLabelStyles}>CAQI</span>
           </span>
         </div>
       </div>

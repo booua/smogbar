@@ -17,3 +17,13 @@ export const GET_MEASUREMENTS = gql`
       }
     }
   }`;
+
+export const GET_NEAEREST_INSTALLATION = gql`
+query nearestInstallation($lat: Float!, $lng: Float!){
+  nearestInstallation(lat: $lat, lng: $lng) {
+      address{
+        displayAddress1
+        displayAddress2
+      }
+    }
+}`;

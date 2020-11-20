@@ -6,6 +6,7 @@ let installExtension, REACT_DEVELOPER_TOOLS;
 
 let mb = createMenubar();
 
+
 mb.on("after-create-window", openDevToolsForReact);
 
 if (require("electron-squirrel-startup")) {
@@ -50,11 +51,14 @@ function createMenubar() {
     icon: icon,
     tooltip: "Airly widget",
     browserWindow: {
+      resizable: false,
       webPreferences: {
         nodeIntegration: true,
       },
     },
   });
+
+  
 
   mb.app.commandLine.appendSwitch(
     "disable-backgrounding-occluded-windows",
