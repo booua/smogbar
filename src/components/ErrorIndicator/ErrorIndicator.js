@@ -3,18 +3,28 @@ import React from "react";
 const styles = {
   errorIndicator: {
     width: "100%",
-    backgroundColor: "red",
     textAlign: "center",
-    position:"absolute",
+    position: "absolute",
     height: "100%",
+    backgroundColor: "rgba(255,150,150,0.8)",
+    display: 'grid',
+    placeItems:'center' 
   },
 };
 const ErrorIndicator = (props) => {
   const { error } = props;
 
-  console.log(error);
+  console.log(error.message);
 
-  return <div style={styles.errorIndicator}>{error.message}</div>;
+  return (
+    
+    <div style={styles.errorIndicator}>
+      <span style={{}}>
+        Sorry! An error occured :C <br/>
+        We're about to fix it tho! Don't worry!
+      </span>
+    </div>
+  );
 };
 
 export default ErrorIndicator;

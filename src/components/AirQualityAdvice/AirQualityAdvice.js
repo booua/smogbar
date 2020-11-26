@@ -22,6 +22,9 @@ const AirQualityAdvice = () => {
       fetchGeolocation();
   }, []);
 
+  // let geolocation = {lat:  50.0473559, lng: 19.9276365}
+  // let geolocation = {lat: 50.8500018, lng: 20.6163501}
+
   return geolocation ? (
     <div style={styles.airQualityContainer}>
       <Measurements lat={geolocation.lat} lng={geolocation.lng} />

@@ -9,10 +9,12 @@ function LoadingIndicator() {
           animationPlayState: "running",
           WebkitAnimationDelay: "0s",
           animationDelay: "0s",
+          width:"100vw",
+          height:"100vh",
+          position:"fixed"
         }}
-        width="100%"
-        height="100%"
         display="block"
+        position="absolute"
         preserveAspectRatio="xMidYMid"
         viewBox="0 0 100 100"
       >

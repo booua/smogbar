@@ -1,79 +1,33 @@
-import React from "react";
+import {
+  barLabelContainerStyles,
+  barLabelStyles,
+  caqiLabelStyles,
+  containerStyles,
+  fillerLabelStyles,
+  fillerStyles,
+  labelStyles,
+  wrapperStyles,
+} from "./airQualityBarStyles";
 
 const AirQualityBar = (props) => {
   const { bgColor, caqiValue } = props;
 
-  const containerStyles = {
-    height: "20px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    width: "85%",
-    backgroundColor: "#e0e0de",
-    borderRadius: "10px",
-    marginBottom: "20px",
-  };
-
-  const fillerStyles = {
-    height: "100%",
-    width: `${caqiValue}%`,
-    backgroundColor: `${bgColor}`,
-    borderRadius: "inherit",
-    textAlign: "right",
-    transition: "width 0.4s ease-in-out",
-    minWidth: '65px',
-    maxWidth: '100%',
-  };
-
-  const caqiLabelStyles = {
-    padding: "5px",
-    color: "black",
-    fontSize: "0.9rem",
-    fontFamily: "Quicksand",
-  };
-
-  const labelStyles = {
-    color: "black",
-    fontSize: "0.6rem",
-    fontFamily: "Quicksand",
-  };
-
-  const barLabelStyles = {
-    flex: 1,
-    color: "black",
-    fontSize: "0.9rem",
-    fontFamily: "Quicksand",
-    
-  };
-
-  const fillerLabelStyles = {
-    color: "black",
-    fontSize: "0.5rem",
-    fontFamily: "Quicksand",
-  }
-
-  const barLabelContainerStyles = {
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-    textAlign: "center",
-  };
-
-  const wrapperStyles = {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  };
-
   const labels = ["Excellent", "Good", "So so", "Bad", "We're gonna die"];
-
+  if (caqiValue === null) {
+    return "";
+  }
   return (
     <div style={wrapperStyles}>
       <div style={containerStyles}>
-        <div style={fillerStyles}>
+        <div
+          style={{
+            ...fillerStyles,
+            width: `${caqiValue}%`,
+            backgroundColor: `${bgColor}`,
+          }}
+        >
           <span style={caqiLabelStyles}>
-            {`${caqiValue}`} 
+            {`${caqiValue}`}
             <span style={labelStyles}> </span>
             <span style={fillerLabelStyles}>CAQI</span>
           </span>

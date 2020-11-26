@@ -2,10 +2,15 @@ const path = require("path");
 const { app } = require("electron");
 const isDev = require("electron-is-dev");
 const { menubar } = require("menubar");
+const settings = require("electron-settings");
+const { ipcMain } = require("electron");
+
 let installExtension, REACT_DEVELOPER_TOOLS;
 
 let mb = createMenubar();
 
+settings.unsetSync("nearestMeasurements");
+settings.unsetSync("nearestInstallation");
 
 mb.on("after-create-window", openDevToolsForReact);
 
@@ -19,21 +24,14 @@ app.on("window-all-closed", () => {
   }
 });
 
-mb.on("ready", () => {
-  console.log("app is ready");
-});
-
 function openDevToolsForReact() {
   if (isDev) {
     mb.window.openDevTools({ mode: "detach" });
-    installExtension(REACT_DEVELOPER_TOOLS)
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((error) => console.log(`An error occurred: , ${error}`));
+    installExtension(REACT_DEVELOPER_TOOLS);
   }
 }
 
 function createMenubar() {
-  
   if (isDev) {
     const devTools = require("electron-devtools-installer");
     installExtension = devTools.default;
@@ -58,12 +56,36 @@ function createMenubar() {
     },
   });
 
-  
-
   mb.app.commandLine.appendSwitch(
     "disable-backgrounding-occluded-windows",
     "true"
   );
-
   return mb;
 }
+
+ipcMain.on("checkForCachedData", (event, type) => {
+  settings.get(type).then((value) => {
+    if (!value || value === "") {
+      event.returnValue = "noData";
+    } else {
+      let isDataObsolete = Date.now() - value.timestamp > 1800000;
+      if (!isDataObsolete) {
+        event.returnValue = value;
+      } else {
+        event.returnValue = "noData";
+      }
+    }
+  });
+});
+
+ipcMain.on("cacheData", (event, data) => {
+  settings.set(data.dataType, data);
+  event.returnValue = "savedCache";
+});
+
+ipcMain.on("clearCache", (event, data) => {
+  settings.unsetSync("nearestMeasurements");
+  settings.unsetSync("nearestInstallation");
+  event.returnValue = "clearedCache";
+});
+

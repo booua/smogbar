@@ -1,77 +1,81 @@
-import { useQuery } from "@apollo/react-hooks";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorIndicator from "../ErrorIndicator/ErrorIndicator";
 import { GET_MEASUREMENTS } from "../../api/queries";
 import AirQualityBar from "../AirQualityBar/AirQualityBar";
-
-const styles = {
-  measurements: {
-    width: "100%",
-    fontFamily: "Quicksand"
-  },
-};
+import { useCachedData } from "../../hooks/hooks";
+import {
+  adviceHeader,
+  indexDescriptionHeader,
+  measurements,
+  airQualityBarContainer,
+  measurementsContainer,
+  refreshButton,
+} from "./measurementsStyles";
+import TemperatureIndicator from "../TemperatureIndicator/TemperatureIndicator";
+import PMMeasurment from "../PMMeasurement/PMMeasurement";
 
 const Measurements = (props) => {
-  const { lat, lng } = props;
-  const { loading, error, data } = useQuery(GET_MEASUREMENTS, {
-    variables: { lat, lng },
-  });
-
-  if (loading) return <LoadingIndicator />;
-  if (error) return <ErrorIndicator />;
   let pmMeasurementKeys = ["PM1", "PM10", "PM25"];
 
-  let backgroundColor = data.nearestMeasurement.current.indexes[0].color;
-  let caqiValue = data.nearestMeasurement.current.indexes[0].value;
+  const refreshMeasurements = () => {
+    console.log('ref')
+  }
+
+  const [loading, error, measurementData] = useCachedData(
+    GET_MEASUREMENTS,
+    "nearestMeasurements",
+    props,
+    []
+  );
+
+  if (loading) return <LoadingIndicator />;
+  if (error) return <ErrorIndicator error={error} />;
+
+  let indexes =
+    measurementData &&
+    measurementData.nearestMeasurement &&
+    measurementData.nearestMeasurement.current &&
+    measurementData.nearestMeasurement.current.indexes[0];
+  let backgroundColor = indexes && indexes.color;
+  let caqiValue = indexes && indexes.value;
 
   return (
-    <div style={styles.measurements}>
-      <h1
-        style={{
-          color: backgroundColor,
-          textAlign: "center",
-          fontSize: "2rem",
-        }}
-      >
-        {" "}
-        {data.nearestMeasurement.current.indexes[0].advice}
+    <div style={measurements}>
+      {/* <button style={refreshButton} onClick={refreshMeasurements.bind(this)}>&#x21bb;</button> */}
+      <h1 style={{ ...adviceHeader, color: backgroundColor }}>
+        {indexes && indexes.advice}
       </h1>
-      <h1
-        style={{ textAlign: "center", fontSize: "1rem", marginBottom: "20px" }}
-      >
-        {data.nearestMeasurement.current.indexes[0].description}
-      </h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+
+      <h1 style={indexDescriptionHeader}>{indexes && indexes.description}</h1>
+
+      <div style={airQualityBarContainer}>
         <AirQualityBar bgColor={backgroundColor} caqiValue={caqiValue} />
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
-        {data.nearestMeasurement.current.values.map((measurement) => {
-          if (pmMeasurementKeys.includes(measurement.name)) {
-            return (
-              <div
-                key={measurement.name}
-                style={{ padding: "20px", marginTop: "25px", textAlign: "center" }}
-              >
-                <h1 style={{ fontSize: "1rem" }}>{measurement.name}</h1>
-                <span style={{ fontSize: "0.9rem" }}>{measurement.value}</span>
-              </div>
-            );
-          } else if (measurement.name === "TEMPERATURE") {
-            return (
-              <div key={measurement.name} style={{position: 'absolute', bottom:'20px', left: '20px'}}>
-                <span style={{ fontSize: "1.3rem" }}>{measurement.value} &deg;C</span>
-              </div>
-            );
-          } else {
-            return ""
-          }
-        })}
+      <div style={measurementsContainer}>
+        {measurementData &&
+          measurementData.nearestMeasurement.current &&
+          measurementData.nearestMeasurement.current.values.map(
+            (measurement) => {
+              if (pmMeasurementKeys.includes(measurement.name)) {
+                return (
+                  <PMMeasurment
+                    key={measurement.name}
+                    name={measurement.name}
+                    value={measurement.value}
+                  />
+                );
+              } else if (measurement.name === "TEMPERATURE") {
+                return (
+                  <TemperatureIndicator
+                    key={measurement.name}
+                    value={measurement.value}
+                  />
+                );
+              } else {
+                return "";
+              }
+            }
+          )}
       </div>
     </div>
   );
