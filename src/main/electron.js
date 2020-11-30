@@ -115,11 +115,6 @@ ipcMain.on("saveTheme", (event, theme) => {
 
 ipcMain.on("getSavedTheme", (event) => {
   settings.get("theme").then((value) => {
-    if (value) {
       event.returnValue = value;
-    } else if(nativeTheme.themeSource !== 'system'){
-      console.log(nativeTheme.themeSource)
-      event.returnValue = nativeTheme.themeSource
-    }
   });
 });

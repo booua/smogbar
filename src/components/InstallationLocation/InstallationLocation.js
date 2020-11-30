@@ -15,11 +15,10 @@ const InstallationLocation = (props) => {
   const [loading, error, installationData] = useCachedData(
     GET_NEAEREST_INSTALLATION,
     "nearestInstallation",
-    props,
-    []
+    props
   );
+  
   if (loading) return <LoadingIndicator />
-
   if (error) return <ErrorIndicator error={error} />;
 
   let installation =

@@ -11,7 +11,7 @@ export const LoadingIndicator = () => {
         width: "100vw",
         height: "100vh",
         position: "fixed",
-        zIndex: "99999",
+        zIndex: "999",
         backgroundColor: "#212124"
       }}
       display="block"

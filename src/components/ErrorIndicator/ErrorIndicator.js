@@ -5,8 +5,9 @@ const styles = {
     position: "absolute",
     height: "100%",
     backgroundColor: "rgba(255,150,150,0.8)",
-    display: 'grid',
-    placeItems:'center' 
+    display: "grid",
+    placeItems: "center",
+    zIndex: "9999",
   },
 };
 const ErrorIndicator = (props) => {
@@ -15,10 +16,9 @@ const ErrorIndicator = (props) => {
   console.error(error.message);
 
   return (
-    
     <div style={styles.errorIndicator}>
       <span style={{}}>
-        Sorry! An error occured :C <br/>
+        Sorry! An error occured :C <br />
         We're about to fix it tho! Don't worry!
       </span>
     </div>

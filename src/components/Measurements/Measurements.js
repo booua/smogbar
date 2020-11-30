@@ -1,4 +1,4 @@
-import {LoadingIndicator} from "../LoadingIndicator/LoadingIndicator";
+import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";
 import ErrorIndicator from "../ErrorIndicator/ErrorIndicator";
 import { GET_MEASUREMENTS } from "../../api/queries";
 import AirQualityBar from "../AirQualityBar/AirQualityBar";
@@ -13,20 +13,27 @@ import {
 } from "./measurementsStyles";
 import TemperatureIndicator from "../TemperatureIndicator/TemperatureIndicator";
 import PMMeasurment from "../PMMeasurement/PMMeasurement";
+import { useEffect, useState } from "react";
 
 const Measurements = (props) => {
   let pmMeasurementKeys = ["PM1", "PM10", "PM25"];
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const [
+    loading,
+    error,
+    measurementData,
+  ] = useCachedData(GET_MEASUREMENTS, "nearestMeasurements", props, [
+    isRefreshing,
+  ]);
+
+  useEffect(() => {
+    setIsRefreshing(false);
+  }, [isRefreshing]);
 
   const refreshMeasurements = () => {
-    console.log("ref");
+    setIsRefreshing(true);
   };
-
-  const [loading, error, measurementData] = useCachedData(
-    GET_MEASUREMENTS,
-    "nearestMeasurements",
-    props,
-    []
-  );
 
   if (loading) return <LoadingIndicator />;
   if (error) return <ErrorIndicator error={error} />;
@@ -41,7 +48,9 @@ const Measurements = (props) => {
 
   return (
     <div style={measurements}>
-      {/* <button style={refreshButton} onClick={refreshMeasurements.bind(this)}>&#x21bb;</button> */}
+      <button style={refreshButton} onClick={() => refreshMeasurements()}>
+        &#x21bb;
+      </button>
       <h1 style={{ ...adviceHeader, color: backgroundColor }}>
         {indexes && indexes.advice}
       </h1>
@@ -53,6 +62,7 @@ const Measurements = (props) => {
       </div>
       <div style={measurementsContainer}>
         {measurementData &&
+          measurementData.nearestMeasurement &&
           measurementData.nearestMeasurement.current &&
           measurementData.nearestMeasurement.current.values.map(
             (measurement) => {

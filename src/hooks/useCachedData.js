@@ -6,10 +6,11 @@ export const useCachedData = (
   query,
   dataType,
   graphqlVariables,
-  dependencies
+  dependencies = []
 ) => {
   const [isDataCached, setIsDataCached] = useState(false);
   const [cacheData, setCacheData] = useState(null);
+  let isRefreshing = dependencies[0];
 
   useEffect(() => {
     let cachedData =
@@ -22,10 +23,25 @@ export const useCachedData = (
     }
   }, dependencies);
 
-  const { loading, error, data } = useQuery(query, {
+  const { loading, error, data, refetch } = useQuery(query, {
     variables: graphqlVariables,
     skip: isDataCached,
   });
+
+  useEffect(() => {
+    if (isRefreshing) {
+      let clearCacheMsg = ipcRenderer && ipcRenderer.sendSync("clearCache");
+      if (clearCacheMsg === "clearedCache") {
+        refetch();
+        let refreshedData = {
+          timestamp: Date.now(),
+          dataType: dataType,
+          ...data,
+        };
+        setCacheData(refreshedData);
+      }
+    }
+  }, [isRefreshing]);
 
   if (!isDataCached && data) {
     let cacheObj = { timestamp: Date.now(), dataType: dataType, ...data };

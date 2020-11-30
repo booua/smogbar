@@ -32,6 +32,7 @@ const AirQualityAdvice = () => {
       return <ErrorIndicator error={error}/>
     }
   }, []);
+  
   return geolocation ? (
     <>
       <div style={styles.airQualityContainer[theme]}>
