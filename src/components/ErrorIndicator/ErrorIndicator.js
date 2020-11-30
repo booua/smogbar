@@ -1,5 +1,3 @@
-import React from "react";
-
 const styles = {
   errorIndicator: {
     width: "100%",
@@ -14,7 +12,7 @@ const styles = {
 const ErrorIndicator = (props) => {
   const { error } = props;
 
-  console.log(error.message);
+  console.error(error.message);
 
   return (
     

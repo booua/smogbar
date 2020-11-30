@@ -1,12 +1,15 @@
+import { topRightbutton } from "../../styles/helperStyles";
+
 export const measurements = {
   width: "100%",
+  height: "100vh",
   fontFamily: "Quicksand",
   display: "grid",
-  gridTemplateRows: "auto auto 1fr 1fr",
+  gridTemplateRows: "auto auto 0.5fr 1fr",
 };
 
 export const adviceHeader = {
-  marginTop: '25px',
+  marginTop: "25px",
   textAlign: "center",
   fontSize: "1.5rem",
   paddingLeft: "5px",
@@ -25,26 +28,16 @@ export const airQualityBarContainer = {
 };
 
 export const measurementsContainer = {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  }
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+};
 
-  export const temperatureIndicator = {
-    fontSize: "1.3rem",
-    position: "absolute",
-    bottom: "20px",
-    left: "20px",
-  }
+export const temperatureIndicator = {
+  fontSize: "1.3rem",
+  position: "absolute",
+  bottom: "20px",
+  left: "20px",
+};
 
-  export const refreshButton = {
-    position: "absolute",
-    top: "0",
-    right: "0",
-    width: '25px',
-    height: '25px',
-    fontSize: "1rem",
-    backgroundColor: 'white',
-    border: 'none',
-    outline: 'none',
-  }
+export const refreshButton = topRightbutton;

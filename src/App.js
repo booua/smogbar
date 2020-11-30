@@ -1,11 +1,7 @@
 import AirQualityAdvice from "./components/AirQualityAdvice/AirQualityAdvice";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-
-const styles = {
-  root: {
-    justifyContent: "center",
-  },
-};
+import ThemeContextProvider from "./contexts/ThemeContext";
+import { rootContainer } from "./styles/helperStyles";
 
 const client = new ApolloClient({
   uri: "https://airly-widget-server.herokuapp.com/",
@@ -14,11 +10,15 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <div style={styles.root}>
-        <AirQualityAdvice></AirQualityAdvice>
-      </div>
-    </ApolloProvider>
+    <>
+      <ApolloProvider client={client}>
+        <ThemeContextProvider>
+          <div style={rootContainer}>
+            <AirQualityAdvice />
+          </div>
+        </ThemeContextProvider>
+      </ApolloProvider>
+    </>
   );
 }
 

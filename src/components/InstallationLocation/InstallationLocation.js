@@ -1,7 +1,7 @@
 import { GET_NEAEREST_INSTALLATION } from "../../api/queries";
-import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import ErrorIndicator from "../ErrorIndicator/ErrorIndicator";
-import { useCachedData } from "../../hooks/hooks";
+import { useCachedData } from "../../hooks/useCachedData";
+import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";
 
 const styles = {
   installationLocationContainer: {
@@ -18,23 +18,23 @@ const InstallationLocation = (props) => {
     props,
     []
   );
+  if (loading) return <LoadingIndicator />
 
-  if (loading) return <LoadingIndicator />;
   if (error) return <ErrorIndicator error={error} />;
 
   let installation =
     installationData && installationData.nearestInstallation[0];
 
   return (
-    <div style={styles.installationLocationContainer}>
-      <span style={{ fontSize: "0.8rem" }}>
-        {installation && installation.address.displayAddress1}
-      </span>
-      <br />
-      <span style={{ fontSize: "0.7rem" }}>
-        {installation && installation.address.displayAddress2}
-      </span>
-    </div>
+      <div style={styles.installationLocationContainer}>
+        <span style={{ fontSize: "0.8rem" }}>
+          {installation && installation.address.displayAddress1}
+        </span>
+        <br />
+        <span style={{ fontSize: "0.7rem" }}>
+          {installation && installation.address.displayAddress2}
+        </span>
+      </div>
   );
 };
 

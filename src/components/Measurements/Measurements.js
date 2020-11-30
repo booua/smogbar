@@ -1,8 +1,8 @@
-import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
+import {LoadingIndicator} from "../LoadingIndicator/LoadingIndicator";
 import ErrorIndicator from "../ErrorIndicator/ErrorIndicator";
 import { GET_MEASUREMENTS } from "../../api/queries";
 import AirQualityBar from "../AirQualityBar/AirQualityBar";
-import { useCachedData } from "../../hooks/hooks";
+import { useCachedData } from "../../hooks/useCachedData";
 import {
   adviceHeader,
   indexDescriptionHeader,
@@ -18,8 +18,8 @@ const Measurements = (props) => {
   let pmMeasurementKeys = ["PM1", "PM10", "PM25"];
 
   const refreshMeasurements = () => {
-    console.log('ref')
-  }
+    console.log("ref");
+  };
 
   const [loading, error, measurementData] = useCachedData(
     GET_MEASUREMENTS,

@@ -1,5 +1,5 @@
 const path = require("path");
-const { app } = require("electron");
+const { app, nativeTheme } = require("electron");
 const isDev = require("electron-is-dev");
 const { menubar } = require("menubar");
 const settings = require("electron-settings");
@@ -63,6 +63,25 @@ function createMenubar() {
   return mb;
 }
 
+ipcMain.on("setIcon", (event, data) => {
+  setTrayIcon(data);
+  event.returnValue = "iconSet";
+});
+
+function setTrayIcon(caqiValue) {
+  if (caqiValue >= 100) {
+    mb.tray.setImage(path.join(__dirname, "../../src/images/mac/iconv@2x.png"));
+  } else if (caqiValue >= 75 && caqiValue < 100) {
+    mb.tray.setImage(path.join(__dirname, "../../src/images/mac/iconr@2x.png"));
+  } else if (caqiValue >= 50 && caqiValue < 75) {
+    mb.tray.setImage(path.join(__dirname, "../../src/images/mac/icono@2x.png"));
+  } else if (caqiValue >= 30 && caqiValue < 50) {
+    mb.tray.setImage(path.join(__dirname, "../../src/images/mac/icony@2x.png"));
+  } else if (caqiValue >= 0 && caqiValue < 30) {
+    mb.tray.setImage(path.join(__dirname, "../../src/images/mac/icong@2x.png"));
+  }
+}
+
 ipcMain.on("checkForCachedData", (event, type) => {
   settings.get(type).then((value) => {
     if (!value || value === "") {
@@ -89,3 +108,18 @@ ipcMain.on("clearCache", (event, data) => {
   event.returnValue = "clearedCache";
 });
 
+ipcMain.on("saveTheme", (event, theme) => {
+  settings.set("theme", theme);
+  event.returnValue = "themeSaved";
+});
+
+ipcMain.on("getSavedTheme", (event) => {
+  settings.get("theme").then((value) => {
+    if (value) {
+      event.returnValue = value;
+    } else if(nativeTheme.themeSource !== 'system'){
+      console.log(nativeTheme.themeSource)
+      event.returnValue = nativeTheme.themeSource
+    }
+  });
+});

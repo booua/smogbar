@@ -20,7 +20,7 @@ export const containerStyles = {
 
   export const caqiLabelStyles = {
     padding: "5px",
-    color: "black",
+    color: "#222222",
     fontSize: "0.9rem",
     fontFamily: "Quicksand",
   };
@@ -33,14 +33,14 @@ export const containerStyles = {
 
   export const barLabelStyles = {
     flex: 1,
-    color: "black",
+    color: "inherit",
     fontSize: "0.9rem",
     fontFamily: "Quicksand",
     
   };
 
   export const fillerLabelStyles = {
-    color: "black",
+    color: "inherit",
     fontSize: "0.5rem",
     fontFamily: "Quicksand",
   }
