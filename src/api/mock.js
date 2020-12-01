@@ -1,6 +1,6 @@
 export const nearestInstallation = {
   timestamp: 1606321563184,
-  dataType: 'nearestInstallation',
+  dataType: "nearestInstallation",
   nearestInstallation: [
     {
       id: 204,
@@ -30,7 +30,7 @@ export const nearestInstallation = {
 
 export const nearestMeasurements = {
   timestamp: 1606321563184,
-  dataType: 'nearestMeasurements',
+  dataType: "nearestMeasurements",
   nearestMeasurement: {
     current: {
       fromDateTime: "2018-08-24T08:24:48.652Z",

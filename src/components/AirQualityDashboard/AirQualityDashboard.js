@@ -14,7 +14,7 @@ const styles = {
   },
 };
 
-const AirQualityAdvice = () => {
+const AirQualityDashboard = () => {
   const { darkTheme, toggleDarkTheme } = useContext(ThemeContext);
 
   const theme = !darkTheme ? "light" : "dark";
@@ -29,10 +29,10 @@ const AirQualityAdvice = () => {
     try {
       fetchGeolocation();
     } catch (error) {
-      return <ErrorIndicator error={error}/>
+      return <ErrorIndicator error={error} />;
     }
   }, []);
-  
+
   return geolocation ? (
     <>
       <div style={styles.airQualityContainer[theme]}>
@@ -43,7 +43,9 @@ const AirQualityAdvice = () => {
         <InstallationLocation lat={geolocation.lat} lng={geolocation.lng} />
       </div>
     </>
-  ) : <LoadingIndicator/>;
+  ) : (
+    <LoadingIndicator />
+  );
 };
 
-export default AirQualityAdvice;
+export default AirQualityDashboard;

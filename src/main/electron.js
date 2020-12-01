@@ -1,5 +1,5 @@
 const path = require("path");
-const { app, nativeTheme } = require("electron");
+const { app } = require("electron");
 const isDev = require("electron-is-dev");
 const { menubar } = require("menubar");
 const settings = require("electron-settings");

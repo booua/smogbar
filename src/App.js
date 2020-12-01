@@ -1,4 +1,4 @@
-import AirQualityAdvice from "./components/AirQualityAdvice/AirQualityAdvice";
+import AirQualityDashboard from "./components/AirQualityDashboard/AirQualityDashboard";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import ThemeContextProvider from "./contexts/ThemeContext";
 import { rootContainer } from "./styles/helperStyles";
@@ -14,7 +14,7 @@ function App() {
       <ApolloProvider client={client}>
         <ThemeContextProvider>
           <div style={rootContainer}>
-            <AirQualityAdvice />
+            <AirQualityDashboard />
           </div>
         </ThemeContextProvider>
       </ApolloProvider>
