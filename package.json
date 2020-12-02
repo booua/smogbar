@@ -1,7 +1,8 @@
 {
-  "name": "airly_widget",
+  "name": "SMOGbar",
   "version": "0.1.0",
   "main": "src/main/electron.js",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.2.5",
@@ -63,14 +64,14 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "src/icons/mac/icon.ico",
-        "name": "SmogWidget"
+        "icon": "src/icons/mac/icon.icns",
+        "name": "SMOGbar"
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "airly_widget"
+            "name": "SMOGbar"
           }
         },
         {

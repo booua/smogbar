@@ -7,12 +7,48 @@ const { ipcMain } = require("electron");
 
 let installExtension, REACT_DEVELOPER_TOOLS;
 
-let mb = createMenubar();
+app.on("ready", () => {
+  let mb = createMenubar();
 
-settings.unsetSync("nearestMeasurements");
-settings.unsetSync("nearestInstallation");
+  settings.unsetSync("nearestMeasurements");
+  settings.unsetSync("nearestInstallation");
 
-mb.on("after-create-window", openDevToolsForReact);
+  mb.on("after-create-window", () => {
+    if (isDev) {
+      mb.window.openDevTools({ mode: "detach" });
+      installExtension(REACT_DEVELOPER_TOOLS);
+    }
+  });
+
+  ipcMain.on("setIcon", (event, data) => {
+    setTrayIcon(data);
+    event.returnValue = "iconSet";
+  });
+
+  function setTrayIcon(caqiValue) {
+    if (caqiValue >= 100) {
+      mb.tray.setImage(
+        path.join(__dirname, "../../src/images/mac/iconv@2x.png")
+      );
+    } else if (caqiValue >= 75 && caqiValue < 100) {
+      mb.tray.setImage(
+        path.join(__dirname, "../../src/images/mac/iconr@2x.png")
+      );
+    } else if (caqiValue >= 50 && caqiValue < 75) {
+      mb.tray.setImage(
+        path.join(__dirname, "../../src/images/mac/icono@2x.png")
+      );
+    } else if (caqiValue >= 30 && caqiValue < 50) {
+      mb.tray.setImage(
+        path.join(__dirname, "../../src/images/mac/icony@2x.png")
+      );
+    } else if (caqiValue >= 0 && caqiValue < 30) {
+      mb.tray.setImage(
+        path.join(__dirname, "../../src/images/mac/icong@2x.png")
+      );
+    }
+  }
+});
 
 if (require("electron-squirrel-startup")) {
   app.quit();
@@ -24,13 +60,6 @@ app.on("window-all-closed", () => {
   }
 });
 
-function openDevToolsForReact() {
-  if (isDev) {
-    mb.window.openDevTools({ mode: "detach" });
-    installExtension(REACT_DEVELOPER_TOOLS);
-  }
-}
-
 function createMenubar() {
   if (isDev) {
     const devTools = require("electron-devtools-installer");
@@ -40,14 +69,14 @@ function createMenubar() {
 
   const appIndex = isDev
     ? "http://localhost:3000"
-    : `file://${path.join(__dirname, "../build/index.html")}`;
+    : `file://${__dirname}/../../build/index.html`;
 
-  const icon = path.join(__dirname, "../../src/images/mac/icon@2x.png");
+  const iconPath = path.join(__dirname, "../../src/images/mac/icon@2x.png");
 
   const mb = menubar({
     index: appIndex,
-    icon: icon,
-    tooltip: "Airly widget",
+    icon: iconPath,
+    tooltip: "SMOGbar",
     browserWindow: {
       resizable: false,
       webPreferences: {
@@ -61,25 +90,6 @@ function createMenubar() {
     "true"
   );
   return mb;
-}
-
-ipcMain.on("setIcon", (event, data) => {
-  setTrayIcon(data);
-  event.returnValue = "iconSet";
-});
-
-function setTrayIcon(caqiValue) {
-  if (caqiValue >= 100) {
-    mb.tray.setImage(path.join(__dirname, "../../src/images/mac/iconv@2x.png"));
-  } else if (caqiValue >= 75 && caqiValue < 100) {
-    mb.tray.setImage(path.join(__dirname, "../../src/images/mac/iconr@2x.png"));
-  } else if (caqiValue >= 50 && caqiValue < 75) {
-    mb.tray.setImage(path.join(__dirname, "../../src/images/mac/icono@2x.png"));
-  } else if (caqiValue >= 30 && caqiValue < 50) {
-    mb.tray.setImage(path.join(__dirname, "../../src/images/mac/icony@2x.png"));
-  } else if (caqiValue >= 0 && caqiValue < 30) {
-    mb.tray.setImage(path.join(__dirname, "../../src/images/mac/icong@2x.png"));
-  }
 }
 
 ipcMain.on("checkForCachedData", (event, type) => {
@@ -115,6 +125,6 @@ ipcMain.on("saveTheme", (event, theme) => {
 
 ipcMain.on("getSavedTheme", (event) => {
   settings.get("theme").then((value) => {
-      event.returnValue = value;
+    event.returnValue = value;
   });
 });
