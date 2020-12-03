@@ -10,7 +10,7 @@
   <p align="center">
     An awesome, little menubar app for checking out air quality near you!
     <br />
-    <a href="https://github.com/booua/airly_widget"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/booua/smogbar/releases/tag/1.0.0">Download the SMOGBar!</a>
     <br />
     <br />
     <a href="https://github.com/booua/airly_widget/issues">Report Bug</a>
